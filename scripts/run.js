@@ -15,16 +15,16 @@ const main=async()=>{
 	let eventDataCID="bafybeibhwfzx6oo5rymsxmkdxpmkfwyvbjrrwcl7cekmbzlupmp5ypkyfi"
 
 	//create anew event by calling creatNewEvent() and passing the mock prm
-	let txn = await rsvpContract.createNewEvent(
+	let txn = await rsvpContract.CreateNewEvent(
 		timestamp,
 		deposit,
 		maxCapacity,
 		eventDataCID
 	);
 	let wait = await txn.wait();
-	console.log("NEW EVENT CREATED:",wait.event[0].event,wait.events[0].args);
+	console.log("NEW EVENT CREATED:",wait.events[0].event,wait.events[0].args);
 
-	let eventID=wait.event[0].args.eventID;
+	let eventID=wait.events[0].args.eventID;
 	console.log("Event Id:",eventID);
 
 	//call createNewRSVP() function to RSVP with the 3 accounts we initialized
@@ -38,11 +38,11 @@ const main=async()=>{
 
 	txn=await rsvpContract.connect(address1).createNewRSVP(eventID,{value:deposit});
 	wait = await txn.wait();
-	console.log("NEW RSVP:",wait.event[0].event,wait.events[0].args);
+	console.log("NEW RSVP:",wait.events[0].event,wait.events[0].args);
 
 	txn = await rsvpContract.connect(address2).createNewRSVP(eventID,{value:deposit});
 	wait = await txn.wait();
-	console.log("NEW RSVP:",wait.event[0].event,wait.events[0].args);
+	console.log("NEW RSVP:",wait.events[0].event,wait.events[0].args);
 
 	//confirm all of the RSVP by calling the confirmAllAttendees()
 
